@@ -16,20 +16,13 @@ public class Decrypted {
         Path path2 = Path.of(scanner.nextLine());
         System.out.print("Введите ключ шифрования: ");
         int key = scanner.nextInt();
-        try (FileReader reader = new FileReader(path1.toFile());
-             BufferedReader bufferedReader = new BufferedReader(reader);
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path1.toFile()));
              FileWriter writer = new FileWriter(path2.toFile())) {
             String line;
             CaesarCipher cs = new CaesarCipher();
             while ((line = bufferedReader.readLine()) != null) {
-                line = cs.decrypt(line, key);
-                writer.write(line);
+                writer.write(cs.decrypt(line,key));
             }
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-        Decrypted en = new Decrypted();
-        en.decrypted();
     }
 }

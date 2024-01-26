@@ -28,17 +28,26 @@ public class Util {
     }
 
     public static int readInt() {
-/*
-Реализовать по примеру readString(используя внутри readString)
- */
+        int number;
+        try {
+            number = CONSOLE.read();
+        } catch (IOException e) {
+            writeMessage("Произошла ошибка при вводе числа, попробуйте еще раз.");
+            number = readInt();
+        }
+        return number;
     }
 
     public static Path buildFileName(String path, String suffix) {
-   /*
-   Подсказка : resolve, отнссительный путь.
-   К примеру дана строка path - "...\...\filename.txt"
-   Нужно до точки перед расширением после filename вставить suffix
-   нужно подумать как это сделать
-    */
+        Path filePath = Path.of(path);
+        String name = filePath.getFileName().toString();
+        String newFileName;
+        if (name.contains(".")) {
+            String filename = name.substring(0, name.indexOf('.'));
+            newFileName = filename + suffix + name.substring(name.indexOf('.'));
+        }else {
+            newFileName = name + suffix;
+        }
+        return filePath.getParent().resolve(newFileName);
     }
 }

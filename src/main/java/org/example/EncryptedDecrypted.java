@@ -23,10 +23,13 @@ public class EncryptedDecrypted {
              BufferedWriter bufferedWriter = Files.newBufferedWriter(dst)) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-               String result = flag ? caesar.encrypt(line, key) : caesar.decrypt(line,key);
+                String result = flag ? caesar.encrypt(line, key) : caesar.decrypt(line, key);
                 bufferedWriter.write(result);
                 bufferedWriter.newLine();
             }
-        }Util.writeMessage("Файл "+(flag ? "зашифрован" : "расшифрован")+" и располагается по адресу "+ dst);
+        }
+        Util.writeMessage("Файл " + (flag ? "зашифрован" : "расшифрован") + " и располагается по адресу " + dst);
     }
+
+
 }

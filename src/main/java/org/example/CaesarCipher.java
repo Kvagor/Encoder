@@ -21,4 +21,7 @@ public class CaesarCipher {
     public String decrypt(String message, int key) {
         return encrypt(message,-key);
     }
+    public int alphabetLength(){
+        return ALPHABET.length();
+    }
 }

@@ -24,45 +24,26 @@ public class Parsing {
             for (int i = 0; i < listEncrypted.size(); i++) {
                 decrypted.put(listEncrypted.get(i).getKey(),listStatistic.get(i).getKey());
             }
-            try(BufferedReader reader = Files.newBufferedReader(Path.of(src));
-                BufferedWriter writer = Files.newBufferedWriter(dest)){
-                while(reader.ready()){
-                    StringBuilder builder = new StringBuilder();
-                    String line = reader.readLine();
-                    for (char aChar : line.toCharArray()) {
-                        builder.append(decrypted.get(aChar));
-                    }
-                    writer.write(builder.toString());
-                    writer.newLine();
-                }
+            String line = Files.readString(Path.of(src));
+            StringBuilder builder = new StringBuilder();
+            for (char aChar : line.toCharArray()) {
+                builder.append(decrypted.get(aChar));
             }
+            Files.writeString(dest,builder.toString());
             Util.writeMessage("Сoдержимое файла расшифровано");
 
         }else {
             Util.writeMessage("Пожалуйста предоставьте файл для статистики большего обьема");
         }
-
     }
 
     @SneakyThrows
     private List<Map.Entry<Character, Integer>> convertToList(String path) {
         Map<Character, Integer> map = new HashMap<>();
         String content = Files.readString(Path.of(path));
-        Files.writeString(Path.of(path),content);
-        try (BufferedReader reader = Files.newBufferedReader(Path.of(path))) {
-            StringBuilder builder = new StringBuilder();
-            while (reader.ready()) {
-                builder.append(reader.readLine());
-            }
-            for (char aChar : builder.toString().toCharArray()) {
+            for (char aChar : content.toCharArray()) {
                 map.merge(aChar,1, Integer::sum);
-//                if (!map.containsKey(aChar)) {
-//                    map.put(aChar, 1);
-//                } else {
-//                    map.put(aChar, map.get(aChar) + 1);
-//                }
             }
-        }
         Set<Map.Entry<Character, Integer>> entries = map.entrySet();
         List<Map.Entry<Character, Integer>> list = new ArrayList<>(entries);
         Comparator<Map.Entry<Character, Integer>> comparator = (o1, o2) -> o2.getValue() - o1.getValue();

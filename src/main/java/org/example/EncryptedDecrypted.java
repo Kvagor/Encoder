@@ -19,15 +19,9 @@ public class EncryptedDecrypted {
         int key = Util.readInt();
 
         Path dst = Util.buildFileName(src, flag ? "_encrypted" : "_decrypted");
-        try (BufferedReader bufferedReader = Files.newBufferedReader(Path.of(src));
-             BufferedWriter bufferedWriter = Files.newBufferedWriter(dst)) {
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                String result = flag ? caesar.encrypt(line, key) : caesar.decrypt(line, key);
-                bufferedWriter.write(result);
-                bufferedWriter.newLine();
-            }
-        }
+        String content = Files.readString(Path.of(src));
+        String result = flag ? caesar.encrypt(content, key) : caesar.decrypt(content, key);
+        Files.writeString(dst,result);
         Util.writeMessage("Файл " + (flag ? "зашифрован" : "расшифрован") + " и располагается по адресу " + dst);
     }
 

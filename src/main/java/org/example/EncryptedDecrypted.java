@@ -2,8 +2,6 @@ package org.example;
 
 import lombok.SneakyThrows;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -22,7 +20,7 @@ public class EncryptedDecrypted {
         String content = Files.readString(Path.of(src));
         String result = flag ? caesar.encrypt(content, key) : caesar.decrypt(content, key);
         Files.writeString(dst,result);
-        Util.writeMessage("Файл " + (flag ? "зашифрован" : "расшифрован") + " и располагается по адресу " + dst);
+        Util.writeMessage("Файл, располагающийся по адресу "+dst + (flag ? " зашифрован" : " расшифрован"));
     }
 
 
